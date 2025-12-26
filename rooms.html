@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Rooms | CU Hostel IMS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrapper">
+  <div class="inner-page">
+
+    <div class="header-logo">
+      <img src="cu-logo.png" alt="CUIMS Logo" class="logo-img">
+      <span>Hostel IMS</span>
+    </div>
+
+    <div class="inner-header">
+      <h1>Room Management</h1>
+      <p>Chandigarh University Hostel · Add and view hostel rooms and their status.</p>
+    </div>
+
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+    <div class="inner-card">
+      <div class="form-section">
+        <form id="roomForm">
+          <div>
+            <label for="room_no">Room No</label>
+            <input id="room_no" placeholder="e.g. A-101" required>
+          </div>
+          <div>
+            <label for="type">Room Type</label>
+            <input id="type" placeholder="Single / Double / Triple" required>
+          </div>
+          <div>
+            <label for="capacity">Capacity</label>
+            <input id="capacity" type="number" placeholder="e.g. 2" required>
+          </div>
+          <div>
+            <label for="status">Status</label>
+            <select id="status">
+              <option value="available">Available</option>
+              <option value="full">Full</option>
+            </select>
+          </div>
+          <button type="submit" class="card-btn">Save Room</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table id="roomTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Room No</th>
+            <th>Type</th>
+            <th>Capacity</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+<script>
+  const apiBase = "http://localhost:5000";
+
+  const roomForm = document.getElementById("roomForm");
+  const roomTableBody = document.querySelector("#roomTable tbody");
+
+  // Load rooms from backend on page load
+  async function loadRooms() {
+    try {
+      const res = await fetch(`${apiBase}/rooms`);
+      const rooms = await res.json();
+
+      roomTableBody.innerHTML = "";
+
+      rooms.forEach((r, index) => {
+        const statusClass = r.status === "available" ? "status-available" : "status-full";
+        const statusText = r.status === "available" ? "Available" : "Full";
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${r.room_no}</td>
+          <td>${r.type}</td>
+          <td>${r.capacity}</td>
+          <td><span class="status-pill ${statusClass}">${statusText}</span></td>
+        `;
+        roomTableBody.appendChild(tr);
+      });
+    } catch (err) {
+      console.error("Error loading rooms:", err);
+      alert("Failed to load rooms from server.");
+    }
+  }
+
+  // Handle form submit – send room to backend
+  roomForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const room_no = document.getElementById("room_no").value.trim();
+    const type = document.getElementById("type").value.trim();
+    const capacity = document.getElementById("capacity").value.trim();
+    const status = document.getElementById("status").value.trim();
+
+    if (!room_no || !type || !capacity || !status) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${apiBase}/rooms`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ room_no, type, capacity, status }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to add room");
+      }
+
+      roomForm.reset();
+      await loadRooms();
+      alert("Room added successfully!");
+    } catch (err) {
+      console.error("Error adding room:", err);
+      alert("Failed to add room.");
+    }
+  });
+
+  // Call loadRooms when page opens
+  window.addEventListener("DOMContentLoaded", loadRooms);
+</script>

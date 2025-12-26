@@ -1,0 +1,300 @@
+/* ===== Base ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f5f5f5;
+  color: #111827;
+}
+
+/* ===== Layout ===== */
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top part (logo + cards) */
+.top-section {
+  flex: 1;
+  background: #f5f5f5;
+  padding: 32px 6vw 0;
+}
+
+/* Bottom red bar */
+.bottom-section {
+  background: #e30613; /* CU red */
+  color: #ffffff;
+  padding: 20px 6vw;
+}
+
+/* ===== Header / Logo ===== */
+.header-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header-logo img.logo-img {
+  height: 100px;          /* change if you want bigger/smaller logo */
+  margin-right: 10px;
+}
+
+.header-logo span {
+  font-size: 50px;
+  font-weight: 700;
+  color: #111827;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ===== Card Row ===== */
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+/* Generic card style */
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 22px 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* Icon at top of card */
+.card-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+/* Card text */
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.card-text {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+/* Button */
+.card-btn {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 8px 18px;
+  font-size: 13px;
+  border-radius: 999px;
+  border: none;
+  background: #e30613;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.card-btn:hover {
+  background: #c50511;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(227, 6, 19, 0.4);
+}
+
+/* Remove underline from buttons wrapped in a link */
+.card a {
+  text-decoration: none;
+}
+
+/* ===== Bottom (weather/info bar style) ===== */
+.bottom-grid {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.bottom-location {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.bottom-temp-main {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ===== Inner pages (Rooms / Students / Complaints) ===== */
+
+.inner-page {
+  padding: 24px 6vw 24px;
+}
+
+/* Optional logo on inner pages */
+.inner-page .header-logo {
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
+
+.inner-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.inner-header h1 {
+  font-size: 26px;
+  margin-bottom: 4px;
+}
+
+.inner-header p {
+  font-size: 13px;
+  color: #4b5563;
+}
+
+/* Card container for inner pages */
+.inner-card {
+  background: #ffffff;
+  border-radius: 18px 18px 0 0;
+  padding: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  margin-bottom: 0;
+}
+
+/* Form + table layout */
+.form-section {
+  margin-bottom: 18px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 14px;
+}
+
+.form-full {
+  grid-column: 1 / -1;
+}
+
+label {
+  font-size: 13px;
+  color: #374151;
+  display: block;
+  margin-bottom: 4px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #e30613;
+  box-shadow: 0 0 0 1px rgba(227,6,19,0.3);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+/* Form button same as card button */
+form button {
+  grid-column: 1 / -1;
+  justify-self: flex-start;
+}
+
+/* Table */
+.table-wrapper {
+  border-radius: 0 0 18px 18px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-top: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+thead {
+  background: #f3f4f6;
+}
+
+th, td {
+  padding: 9px 10px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+/* Simple status pill (for rooms) */
+.status-pill {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+}
+
+.status-available {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-full {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Back link */
+.back-link {
+  display: inline-block;
+  margin: 8px 0 16px;
+  font-size: 13px;
+  color: #e30613;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 960px) {
+  .card-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .card-row {
+    grid-template-columns: 1fr;
+  }
+
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  .top-section, .bottom-section, .inner-page {
+    padding: 20px 4vw;
+  }
+}
